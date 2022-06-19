@@ -18,11 +18,6 @@ const standardizeInput = function(collection) {
   }
   const myReduce = function(collection, callback, acc) {
     let newCollection = standardizeInput(collection);
-    // The if statement below handles the case where no start value is passed in 
-    // for the accumulator
-    // If acc is null, it is set equal to the first value in newCollection
-    // That first value is then sliced out of newCollection since it has already
-    // been accounted for
     if (!acc) {
       acc = newCollection[0];
       newCollection = newCollection.slice(1);
@@ -52,7 +47,6 @@ const standardizeInput = function(collection) {
     const newCollection = standardizeInput(collection);
     return newCollection.length;
   }
-  // Array Functions
   const myFirst = function(arr, stop=false) {
     return (stop) ? arr.slice(0, stop) : arr[0];
   }
@@ -72,29 +66,19 @@ const standardizeInput = function(collection) {
       end
     });
   }
-  
-  // unpack is a helper function for myFlatten that is used when shallow is true
-  // It takes each element of the input array (whether it's a primitive value or
-  // an array) and pushes it into the output array
   const unpack = function(receiver, arr) {
     for (let val of arr) {
       receiver.push(val);
     }
   }
-  // myFlatten handles two separate cases: shallow=true and shallow=false
-  // For the true case, the top-level elements are simply pushed into newArr using
-  // the unpack helper function
-  // For the false case, myFlatten is called recursively for each element
   const myFlatten = function(collection, shallow, newArr=[]) {
     if (shallow) {
       for (let val of collection) {
         Array.isArray(val) ? unpack(newArr, val) : newArr.push(val);
       }
     } else {
-      // shallow = false (recursive case)
       for (let val of collection) {
         if (Array.isArray(val)) {
-          s
           myFlatten(val, false, newArr);
         } else {
           newArr.push(val);
